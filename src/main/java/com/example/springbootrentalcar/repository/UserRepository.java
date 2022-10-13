@@ -1,2 +1,21 @@
-package com.example.springbootrentalcar.repository;public interface ArticoliRepository {
+package com.example.springbootrentalcar.repository;
+
+import com.example.springbootrentalcar.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+    @Query(value = "SELECT * from user where isAdmin=false", nativeQuery = true)
+    public List<User> getCustomers();
+
+    public User getUserByUsername(String username);
+
+    public List<User> getCustomerByParam(String filter, String textToSearch);
+
+
 }
