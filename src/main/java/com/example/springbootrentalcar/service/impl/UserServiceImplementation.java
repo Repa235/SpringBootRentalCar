@@ -18,7 +18,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUserById(int id) {
-        return userRepository.getReferenceById(id);
+        return userRepository.findById(id).get();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public List<User> getCustomers() {
-        return null;
+        return userRepository.getUserByIsAdminFalse();
     }
 
 
@@ -42,8 +42,8 @@ public class UserServiceImplementation implements UserService {
         return userRepository.getUserByUsername(username);
     }
 
-    @Override
-    public List<User> getCustomerByParam(String filter, String textToSearch) {
+   /*  @Override
+   public List<User> getCustomerByParam(String filter, String textToSearch) {
         return userRepository.getCustomerByParam(filter,textToSearch);
-    }
+    }*/
 }

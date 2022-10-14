@@ -11,5 +11,5 @@ import java.util.List;
 
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
-    public List<Vehicle> getFreeVehicleInRange(DateInterval dateInterval);
+   // public List<Vehicle> getFreeVehicleInRange(DateInterval dateInterval);
 }

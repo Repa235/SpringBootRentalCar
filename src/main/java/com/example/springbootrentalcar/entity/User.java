@@ -1,5 +1,6 @@
 package com.example.springbootrentalcar.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Table(name = "user")
 @Getter
 @Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class User implements Serializable {
     private static final long serialVersionUID = -9032770611804973466L;
 
@@ -27,7 +29,6 @@ public class User implements Serializable {
     @Column(name = "surname")
     private String surname;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
     private LocalDate birthday;
 

@@ -10,12 +10,11 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-
-    public List<User> getUserByAdminTrue();
+  public List<User> getUserByIsAdminFalse();
 
     public User getUserByUsername(String username);
 
-    public List<User> getCustomerByParam(String filter, String textToSearch);
+   // public List<User> getCustomerByParam(String filter, String textToSearch);
 
 
 }

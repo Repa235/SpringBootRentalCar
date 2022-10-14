@@ -10,5 +10,5 @@ public interface UserService {
     void deleteUser(int id);
     List<User> getCustomers();
     User getUserByUsername(String username);
-    List<User> getCustomerByParam(String filter, String textToSearch);
+  //  List<User> getCustomerByParam(String filter, String textToSearch);
 }
