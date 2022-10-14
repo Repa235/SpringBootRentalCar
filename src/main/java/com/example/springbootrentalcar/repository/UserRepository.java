@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query(value = "SELECT * from user where isAdmin=false", nativeQuery = true)
-    public List<User> getCustomers();
+
+    public List<User> getUserByAdminTrue();
 
     public User getUserByUsername(String username);
 

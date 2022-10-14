@@ -1,7 +1,7 @@
 package com.example.springbootrentalcar.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,8 +9,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "VEHICLE")
-@Data
+@Table(name = "vehicle")
+@Getter
+@Setter
 public class Vehicle implements Serializable {
     private static final long serialVersionUID = -4545225556642569508L;
 
@@ -19,20 +20,19 @@ public class Vehicle implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "carBrand")
+    @Column(name = "car_brand")
     private String carBrand;
 
     @Column(name = "model")
     private String model;
 
-    @Column(name = "registrationYear")
+    @Column(name = "registration_year")
     private int registrationYear;
 
     @Column(name = "type")
     private String type;
 
     @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private Set<Rent> Rents = new HashSet<>();
 
 

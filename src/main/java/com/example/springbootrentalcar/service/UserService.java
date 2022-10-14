@@ -5,10 +5,10 @@ import com.example.springbootrentalcar.entity.User;
 import java.util.List;
 
 public interface UserService {
-    public User getUserById(int id);
-    public void saveOrUpdateUser(User c);
-    public void deleteUser(int id);
-    public List<User> getCustomers();
-    public User getUserByUsername(String username);
-    public List<User> getCustomerByParam(String filter, String textToSearch);
+    User getUserById(int id);
+    void saveOrUpdateUser(User c);
+    void deleteUser(int id);
+    List<User> getCustomers();
+    User getUserByUsername(String username);
+    List<User> getCustomerByParam(String filter, String textToSearch);
 }

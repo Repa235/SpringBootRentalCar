@@ -1,10 +1,14 @@
-package com.example.springbootrentalcar.service;
+package com.example.springbootrentalcar.service.impl;
 
 import com.example.springbootrentalcar.entity.Rent;
 import com.example.springbootrentalcar.repository.RentRepository;
+import com.example.springbootrentalcar.service.RentService;
+import com.example.springbootrentalcar.specifications.DateInterval;
+import com.example.springbootrentalcar.specifications.RentSpecification;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class RentServiceImplementation implements RentService {
 
     private final RentRepository rentRepository;
@@ -21,8 +25,13 @@ public class RentServiceImplementation implements RentService {
 
     @Override
     public List<Rent> getAllRents() {
-        List<Rent> all = rentRepository.findAll();
-        return all;
+        return rentRepository.findAll();
+    }
+
+    @Override
+    public List<Rent> rentsInRange(DateInterval dateInterval) {
+        RentSpecification specForRents = new RentSpecification(dateInterval);
+        return rentRepository.findAll(specForRents);
     }
 
     @Override

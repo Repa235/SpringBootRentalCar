@@ -2,8 +2,8 @@ package com.example.springbootrentalcar.repository;
 
 import com.example.springbootrentalcar.entity.Rent;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 
-public interface RentRepository extends JpaRepository<Rent, Integer> {
+public interface RentRepository extends JpaRepository<Rent, Integer>, JpaSpecificationExecutor<Rent> {
 }

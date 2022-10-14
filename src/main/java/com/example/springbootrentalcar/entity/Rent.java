@@ -1,9 +1,9 @@
 package com.example.springbootrentalcar.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,8 +11,9 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "RENT")
-@Data
+@Table(name = "rent")
+@Getter
+@Setter
 public class Rent implements Serializable {
     private static final long serialVersionUID = 3381529742555952208L;
 
@@ -21,27 +22,23 @@ public class Rent implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "startDate")
+
+    @Column(name = "start_date")
     private LocalDate startDate;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "endDate")
+
+    @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "isApproved")
+    @Column(name = "is_approved")
     private boolean isApproved;
 
     @ManyToOne
-    @EqualsAndHashCode.Exclude
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    @JsonBackReference
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @EqualsAndHashCode.Exclude
-    @JoinColumn(name = "vehicleId", referencedColumnName = "id")
-    @JsonBackReference
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
 }

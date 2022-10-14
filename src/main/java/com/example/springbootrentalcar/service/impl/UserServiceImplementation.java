@@ -1,10 +1,12 @@
-package com.example.springbootrentalcar.service;
+package com.example.springbootrentalcar.service.impl;
 
 import com.example.springbootrentalcar.entity.User;
 import com.example.springbootrentalcar.repository.UserRepository;
+import com.example.springbootrentalcar.service.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
@@ -31,8 +33,9 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public List<User> getCustomers() {
-        return userRepository.getCustomers();
+        return null;
     }
+
 
     @Override
     public User getUserByUsername(String username) {
