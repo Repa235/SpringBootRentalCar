@@ -3,6 +3,8 @@ package com.example.springbootrentalcar.service.impl;
 import com.example.springbootrentalcar.entity.User;
 import com.example.springbootrentalcar.repository.UserRepository;
 import com.example.springbootrentalcar.service.UserService;
+import com.example.springbootrentalcar.specifications.UserSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,8 +44,9 @@ public class UserServiceImplementation implements UserService {
         return userRepository.getUserByUsername(username);
     }
 
-   /*  @Override
+    @Override
    public List<User> getCustomerByParam(String filter, String textToSearch) {
-        return userRepository.getCustomerByParam(filter,textToSearch);
-    }*/
+        UserSpecification userSpecification = new UserSpecification(filter,textToSearch);
+        return userRepository.findAll(userSpecification);
+    }
 }

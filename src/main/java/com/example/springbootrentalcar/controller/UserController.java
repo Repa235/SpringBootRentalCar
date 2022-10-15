@@ -6,7 +6,6 @@ import com.example.springbootrentalcar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +37,27 @@ public class UserController {
             return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<User>(user, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/getByUsername/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
+        User user = userService.getUserByUsername(username);
+        if(user == null) {
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/search/{filter}/{textToSearch}")
+    public ResponseEntity<List<User>> getCustomerByParam(@PathVariable("filter") String filter,
+                                                        @PathVariable("textToSearch") String textToSearch) {
+        List<User> userFounded = userService.getCustomerByParam(filter,textToSearch);
+        if(userFounded == null) {
+            return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<User>>(userFounded, HttpStatus.OK);
         }
     }
 
