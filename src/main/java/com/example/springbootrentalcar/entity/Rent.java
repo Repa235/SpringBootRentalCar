@@ -1,7 +1,5 @@
 package com.example.springbootrentalcar.entity;
 
-
-
 import lombok.Getter;
 import lombok.Setter;
 

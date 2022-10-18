@@ -1,42 +1,43 @@
 package com.example.springbootrentalcar.service.impl;
 
+import com.example.springbootrentalcar.dto.RentDto;
 import com.example.springbootrentalcar.entity.Rent;
+import com.example.springbootrentalcar.mapper.RentMapper;
 import com.example.springbootrentalcar.repository.RentRepository;
 import com.example.springbootrentalcar.service.RentService;
 import com.example.springbootrentalcar.specifications.DateInterval;
 import com.example.springbootrentalcar.specifications.RentSpecification;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@RequiredArgsConstructor
 public class RentServiceImplementation implements RentService {
 
     private final RentRepository rentRepository;
-
-    public RentServiceImplementation(RentRepository rentRepository) {
-        this.rentRepository = rentRepository;
-    }
+    private final RentMapper rentMapper;
 
 
     @Override
-    public Rent getRentById(int id) {
-        return rentRepository.getReferenceById(id);
+    public RentDto getRentById(int id) {
+        return rentMapper.convertToDto(rentRepository.getReferenceById(id));
     }
 
     @Override
-    public List<Rent> getAllRents() {
-        return rentRepository.findAll();
+    public List<RentDto> getAllRents() {
+        return rentMapper.convertToDtoList(rentRepository.findAll());
     }
 
     @Override
-    public List<Rent> rentsInRange(DateInterval dateInterval) {
+    public List<RentDto> rentsInRange(DateInterval dateInterval) {
         RentSpecification specForRents = new RentSpecification(dateInterval);
-        return rentRepository.findAll(specForRents);
+        return rentMapper.convertToDtoList(rentRepository.findAll(specForRents));
     }
 
     @Override
-    public void saveOrUpdateRent(Rent r) {
-        rentRepository.save(r);
+    public void saveOrUpdateRent(RentDto rentDto) {
+        rentRepository.save(rentMapper.convertToRent(rentDto));
     }
 
     @Override
@@ -44,9 +45,4 @@ public class RentServiceImplementation implements RentService {
         rentRepository.deleteById(id);
     }
 
-    @Override
-    public void approveRent(Rent r) {
-        r.setApproved(true);
-        rentRepository.save(r);
-    }
 }

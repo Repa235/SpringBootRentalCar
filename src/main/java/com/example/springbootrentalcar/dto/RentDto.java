@@ -1,8 +1,6 @@
 package com.example.springbootrentalcar.dto;
 
 
-import com.example.springbootrentalcar.entity.User;
-import com.example.springbootrentalcar.entity.Vehicle;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

@@ -2,7 +2,6 @@ package com.example.springbootrentalcar.mapper;
 
 import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.dto.VehicleDto;
-import com.example.springbootrentalcar.entity.User;
 import com.example.springbootrentalcar.entity.Vehicle;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

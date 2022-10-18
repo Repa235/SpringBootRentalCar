@@ -9,7 +9,6 @@ import com.example.springbootrentalcar.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 

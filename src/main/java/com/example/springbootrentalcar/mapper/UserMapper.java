@@ -4,7 +4,6 @@ import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;

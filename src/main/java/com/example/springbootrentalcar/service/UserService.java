@@ -1,7 +1,6 @@
 package com.example.springbootrentalcar.service;
 
 import com.example.springbootrentalcar.dto.UserDto;
-import com.example.springbootrentalcar.entity.User;
 
 import java.util.List;
 

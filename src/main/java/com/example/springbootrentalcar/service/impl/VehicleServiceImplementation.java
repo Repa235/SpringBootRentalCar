@@ -1,9 +1,12 @@
 package com.example.springbootrentalcar.service.impl;
 
 
+import com.example.springbootrentalcar.dto.RentDto;
+import com.example.springbootrentalcar.dto.VehicleDto;
 import com.example.springbootrentalcar.entity.Rent;
 import com.example.springbootrentalcar.entity.User;
 import com.example.springbootrentalcar.entity.Vehicle;
+import com.example.springbootrentalcar.mapper.VehicleMapper;
 import com.example.springbootrentalcar.repository.RentRepository;
 import com.example.springbootrentalcar.repository.VehicleRepository;
 import com.example.springbootrentalcar.service.RentService;
@@ -24,36 +27,36 @@ public class VehicleServiceImplementation implements VehicleService {
     private final VehicleRepository vehicleRepository;
     private final RentService rentService;
 
-
+    private final VehicleMapper vehicleMapper;
 
 
     @Override
-    public Vehicle getVehicleById(int id) {
-        return vehicleRepository.getReferenceById(id);
+    public VehicleDto getVehicleById(int id) {
+        return vehicleMapper.convertToDto(vehicleRepository.getReferenceById(id));
     }
 
     @Override
-    public List<Vehicle> getAllVehicles() {
-        return vehicleRepository.findAll();
+    public List<VehicleDto> getAllVehicles() {
+        return vehicleMapper.convertToDtoList(vehicleRepository.findAll());
     }
 
     @Override
-    public void saveOrUpdateVehicle(Vehicle v) {
-        vehicleRepository.save(v);
+    public void saveOrUpdateVehicle(VehicleDto vehicleDto) {
+        vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleDto));
     }
 
     @Override
-    public void deleteVehicle(Vehicle v) {
-        vehicleRepository.delete(v);
+    public void deleteVehicle(int id) {
+        vehicleRepository.deleteById(id);
     }
 
     @Override
-    public List<Vehicle> getFreeVehicleInRange(DateInterval dateInterval) {
-        List<Rent> rentsInRange = rentService.rentsInRange(dateInterval);
-        List<Vehicle> occupiedVehicles = new ArrayList<>();
-        List<Vehicle> allVehicles = getAllVehicles();
-        for (Rent r: rentsInRange) {occupiedVehicles.add(r.getVehicle());}
-        allVehicles.removeAll(occupiedVehicles);
+    public List<VehicleDto> getFreeVehicleInRange(DateInterval dateInterval) {
+        List<RentDto> rentsInRange = rentService.rentsInRange(dateInterval);
+        List<VehicleDto> occupiedVehicles = new ArrayList<>();
+        List<VehicleDto> allVehicles = getAllVehicles();
+        for (RentDto r: rentsInRange) {occupiedVehicles.add(r.getVehicleDto());}
+        allVehicles.remove(occupiedVehicles);
         return allVehicles;
     }
 
