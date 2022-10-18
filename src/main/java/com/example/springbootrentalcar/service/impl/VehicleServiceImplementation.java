@@ -1,6 +1,8 @@
 package com.example.springbootrentalcar.service.impl;
 
+
 import com.example.springbootrentalcar.entity.Rent;
+import com.example.springbootrentalcar.entity.User;
 import com.example.springbootrentalcar.entity.Vehicle;
 import com.example.springbootrentalcar.repository.RentRepository;
 import com.example.springbootrentalcar.repository.VehicleRepository;
@@ -8,11 +10,15 @@ import com.example.springbootrentalcar.service.RentService;
 import com.example.springbootrentalcar.service.VehicleService;
 import com.example.springbootrentalcar.specifications.DateInterval;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
+@Service
 public class VehicleServiceImplementation implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
@@ -50,4 +56,6 @@ public class VehicleServiceImplementation implements VehicleService {
         allVehicles.removeAll(occupiedVehicles);
         return allVehicles;
     }
+
+
 }

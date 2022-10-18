@@ -8,8 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-
-
+@Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
    // public List<Vehicle> getFreeVehicleInRange(DateInterval dateInterval);
 }

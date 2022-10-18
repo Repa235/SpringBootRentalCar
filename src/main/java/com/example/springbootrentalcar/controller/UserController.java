@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -40,20 +41,19 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/search/{filter}/{textToSearch}")
     public ResponseEntity<UserDto> getCustomerByParam(@PathVariable("filter") String filter,
                                                         @PathVariable("textToSearch") String textToSearch) {
-        List<UserDto> userFounded = userService.getCustomerByParam(filter,textToSearch);
-        if(userFounded == null) {
+        List<UserDto> userFound = userService.getCustomerByParam(filter,textToSearch);
+        if(userFound == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity(userFounded, HttpStatus.OK);
+            return new ResponseEntity(userFound, HttpStatus.OK);
         }
     }
 
     @RequestMapping(value = "/addOrUpdate", method = { RequestMethod.POST, RequestMethod.PUT })
-    public void addOrUpdateUser(@RequestBody UserDto userDto) {
+    public void addOrUpdateUser(@Valid @RequestBody UserDto userDto) {
         userService.saveOrUpdateUser(userDto);
     }
 

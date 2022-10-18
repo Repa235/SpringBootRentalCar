@@ -5,6 +5,7 @@ import com.example.springbootrentalcar.entity.User;
 import com.example.springbootrentalcar.entity.Vehicle;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 
@@ -12,10 +13,12 @@ import java.time.LocalDate;
 public class RentDto {
 
     private int id;
+    @NotBlank(message = "Start date is mandatory")
     private LocalDate startDate;
+    @NotBlank(message = "End date is mandatory")
     private LocalDate endDate;
     private boolean isApproved;
-    private User user;
-    private Vehicle vehicle;
+    private UserDto userDto;
+    private VehicleDto vehicleDto;
 
 }

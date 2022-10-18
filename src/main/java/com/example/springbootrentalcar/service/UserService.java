@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
     UserDto getUserById(int id);
-    void saveOrUpdateUser(UserDto c);
+    void saveOrUpdateUser(UserDto userDto);
     void deleteUser(int id);
     public List<UserDto> getCustomers();
     List<UserDto> getCustomerByParam(String filter, String textToSearch);
