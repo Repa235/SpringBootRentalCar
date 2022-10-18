@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 @Data
-public class Vehicle{
+public class VehicleDto {
 
     private int id;
     private String carBrand;

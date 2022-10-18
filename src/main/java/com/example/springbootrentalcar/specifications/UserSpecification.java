@@ -20,7 +20,7 @@ public class UserSpecification implements Specification<User> {
 
     @Override
     public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        Predicate filterPred = criteriaBuilder.like(root.get(filter), "%"+textToSearch+"%");
+        Predicate filterPred = criteriaBuilder.like(root.get(filter), textToSearch);
         Predicate customerPred = criteriaBuilder.isFalse(root.get("isAdmin"));
         return criteriaBuilder.and(filterPred,customerPred);
     }

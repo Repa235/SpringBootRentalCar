@@ -1,14 +1,14 @@
 package com.example.springbootrentalcar.service;
 
+import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.entity.User;
 
 import java.util.List;
 
 public interface UserService {
-    User getUserById(int id);
-    void saveOrUpdateUser(User c);
+    UserDto getUserById(int id);
+    void saveOrUpdateUser(UserDto c);
     void deleteUser(int id);
-    List<User> getCustomers();
-    User getUserByUsername(String username);
-    List<User> getCustomerByParam(String filter, String textToSearch);
+    public List<UserDto> getCustomers();
+    List<UserDto> getCustomerByParam(String filter, String textToSearch);
 }

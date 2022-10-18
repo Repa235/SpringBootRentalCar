@@ -1,7 +1,7 @@
 package com.example.springbootrentalcar.controller;
 
 
-import com.example.springbootrentalcar.entity.User;
+import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,49 +21,40 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getCustomers() {
-        List<User> customersList = userService.getCustomers();
+    public ResponseEntity<UserDto> getCustomers() {
+        List<UserDto> customersList = userService.getCustomers();
         if(customersList == null) {
-            return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<List<User>>(customersList, HttpStatus.OK);
+            return new ResponseEntity(customersList, HttpStatus.OK);
         }
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") int id) {
-        User user = userService.getUserById(id);
-        if(user == null) {
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<UserDto> getUser(@PathVariable("id") int id) {
+        UserDto userDto = userService.getUserById(id);
+        if(userDto == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<User>(user, HttpStatus.OK);
+            return new ResponseEntity(userDto, HttpStatus.OK);
         }
     }
 
-    @GetMapping("/getByUsername/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
-        User user = userService.getUserByUsername(username);
-        if(user == null) {
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-        }
-    }
 
     @GetMapping("/search/{filter}/{textToSearch}")
-    public ResponseEntity<List<User>> getCustomerByParam(@PathVariable("filter") String filter,
+    public ResponseEntity<UserDto> getCustomerByParam(@PathVariable("filter") String filter,
                                                         @PathVariable("textToSearch") String textToSearch) {
-        List<User> userFounded = userService.getCustomerByParam(filter,textToSearch);
+        List<UserDto> userFounded = userService.getCustomerByParam(filter,textToSearch);
         if(userFounded == null) {
-            return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<List<User>>(userFounded, HttpStatus.OK);
+            return new ResponseEntity(userFounded, HttpStatus.OK);
         }
     }
 
     @RequestMapping(value = "/addOrUpdate", method = { RequestMethod.POST, RequestMethod.PUT })
-    public void addOrUpdateUser(@RequestBody User user) {
-        userService.saveOrUpdateUser(user);
+    public void addOrUpdateUser(@RequestBody UserDto userDto) {
+        userService.saveOrUpdateUser(userDto);
     }
 
     @DeleteMapping("/remove/{id}")

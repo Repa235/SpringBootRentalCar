@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 
 @Data
-public class User{
+public class UserDto {
 
     private int id;
     private String name;
@@ -16,4 +16,7 @@ public class User{
     private String password;
 
 }
+
+
+
 
