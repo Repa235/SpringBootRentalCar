@@ -5,12 +5,14 @@ import com.example.springbootrentalcar.dto.VehicleDto;
 import com.example.springbootrentalcar.entity.Vehicle;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Component
 public class VehicleMapper {
 
     private final ModelMapper modelMapper;

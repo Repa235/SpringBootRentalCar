@@ -3,11 +3,8 @@ package com.example.springbootrentalcar.service.impl;
 
 import com.example.springbootrentalcar.dto.RentDto;
 import com.example.springbootrentalcar.dto.VehicleDto;
-import com.example.springbootrentalcar.entity.Rent;
-import com.example.springbootrentalcar.entity.User;
-import com.example.springbootrentalcar.entity.Vehicle;
+
 import com.example.springbootrentalcar.mapper.VehicleMapper;
-import com.example.springbootrentalcar.repository.RentRepository;
 import com.example.springbootrentalcar.repository.VehicleRepository;
 import com.example.springbootrentalcar.service.RentService;
 import com.example.springbootrentalcar.service.VehicleService;

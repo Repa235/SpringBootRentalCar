@@ -6,12 +6,14 @@ import com.example.springbootrentalcar.entity.Rent;
 import com.example.springbootrentalcar.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Component
 public class RentMapper {
     private final ModelMapper modelMapper;
     private final UserMapper userMapper;
