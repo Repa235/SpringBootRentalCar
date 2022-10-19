@@ -53,10 +53,15 @@ public class VehicleServiceImplementation implements VehicleService {
     @Override
     public List<VehicleDto> getFreeVehicleInRange(DateInterval dateInterval) {
         List<RentDto> rentsInRange = rentService.rentsInRange(dateInterval);
-        List<VehicleDto> occupiedVehicles = new ArrayList<>();
         List<VehicleDto> allVehicles = getAllVehicles();
-        for (RentDto r: rentsInRange) {occupiedVehicles.add(r.getVehicleDto());}
-        allVehicles.remove(occupiedVehicles);
+        for (VehicleDto v : allVehicles) {
+            for (RentDto r : rentsInRange) {
+               if (v.getId()==r.getVehicleDto().getId()){
+                   allVehicles.remove(v);
+               }
+            }
+            break;
+        }
         return allVehicles;
     }
 

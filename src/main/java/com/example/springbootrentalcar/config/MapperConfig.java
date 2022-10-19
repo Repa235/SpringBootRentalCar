@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MapperConfig {
 
+
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
@@ -26,6 +27,6 @@ public class MapperConfig {
 
     @Bean
     public RentMapper rentMapper(){
-        return new RentMapper(modelMapper());
+        return new RentMapper(modelMapper(), userMapper(), vehicleMapper());
     }
 }
