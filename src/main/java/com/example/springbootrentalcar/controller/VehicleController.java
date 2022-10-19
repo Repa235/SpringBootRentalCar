@@ -18,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/vehicle")
+@CrossOrigin("http://localhost:4200")
 public class VehicleController {
     private final static Logger logger = LoggerFactory.getLogger(VehicleController.class);
 
