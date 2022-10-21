@@ -13,8 +13,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
 
   public List<User> getUserByIsAdminFalse();
-
-    public User getUserByUsername(String username);
+  public User getUserByUsername(String username);
 
 
 }

@@ -52,4 +52,9 @@ public class UserServiceImplementation implements UserService {
         return null;
     }
 
+    @Override
+    public UserDto getUserByUsername(String username) {
+        return userMapper.convertToDto(userRepository.getUserByUsername(username));
+    }
+
 }
