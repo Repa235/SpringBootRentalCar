@@ -26,8 +26,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static String REALM = "SpringBootRentalCar";
-    private static final String[] USER_MATCHER = {"/api/rent/**", "/api/vehicle"};
-    private static final String[] ADMIN_MATCHER = {"/api/user/**", "/api/rent/**", "/api/vehicle/**" };
+    private static final String[] USER_MATCHER = {
+            "/api/vehicle/free",
+            "/api/user/search/**",
+    };
+    private static final String[] ADMIN_MATCHER = {
+            "/api/vehicle/addOrUpdate",
+            "/api/vehicle/remove/**",
+            "/api/user/**",
+    };
+
+    private static final String[] ALL_MATCHER = {
+            "/api/vehicle",
+            "/api/vehicle/get/**",
+            "/api/rent/**"
+    };
 
 
 
@@ -65,15 +78,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers("/").hasAnyRole("USER", "ANONYMOUS")
-                .antMatchers(USER_MATCHER).hasAnyAuthority("ROLE_USER")
+               .antMatchers("/resources/**").permitAll()
+               .antMatchers("/login/**").permitAll()
+               .antMatchers(USER_MATCHER).hasAnyAuthority("ROLE_USER")
                 .antMatchers(ADMIN_MATCHER).hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(ALL_MATCHER).hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint());
-        http.addFilter(authenticationFilter)
+                .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
+                .and()
+                .addFilter(authenticationFilter)
                 .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginProcessingUrl("/login") //url autenticazione utente

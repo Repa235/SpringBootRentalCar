@@ -6,6 +6,7 @@ import com.example.springbootrentalcar.dto.VehicleDto;
 import com.example.springbootrentalcar.service.VehicleService;
 import com.example.springbootrentalcar.specifications.DateInterval;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/vehicle")
 @CrossOrigin("http://localhost:4200")
+@Log
 public class VehicleController {
-    private final static Logger logger = LoggerFactory.getLogger(VehicleController.class);
 
     private final VehicleService vehicleService;
 
