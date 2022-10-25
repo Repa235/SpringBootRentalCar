@@ -1,14 +1,10 @@
 package com.example.springbootrentalcar.controller;
 
-
-import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.dto.VehicleDto;
 import com.example.springbootrentalcar.service.VehicleService;
 import com.example.springbootrentalcar.specifications.DateInterval;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
