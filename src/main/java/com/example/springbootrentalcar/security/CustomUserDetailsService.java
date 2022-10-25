@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.transaction.Transactional;
 
@@ -18,6 +19,7 @@ import javax.transaction.Transactional;
 @Service("customUserDetailsService")
 @RequiredArgsConstructor
 @Log
+@CrossOrigin("http://localhost:4200")
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
@@ -25,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("Search user with username: "+username);
+        log.info("Search user with username: "+ username);
         UserDto userDto = userService.getUserByUsername(username);
         if (userDto == null) {
             throw new UsernameNotFoundException("User not found");

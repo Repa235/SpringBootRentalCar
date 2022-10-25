@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -39,9 +40,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String[] ALL_MATCHER = {
             "/api/vehicle",
             "/api/vehicle/get/**",
-            "/api/rent/**"
+            "/api/rent/**",
+            "/api/auth/**"
     };
-
 
 
     private final UserDetailsService customUserDetailsService;
@@ -72,31 +73,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        JWTAuthenticationFilter authenticationFilter = new JWTAuthenticationFilter(authenticationManagerBean());
-        authenticationFilter.setFilterProcessesUrl("/login");
-        http.cors();
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests()
-               .antMatchers("/resources/**").permitAll()
-               .antMatchers("/login/**").permitAll()
-               .antMatchers(USER_MATCHER).hasAnyAuthority("ROLE_USER")
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
+                .antMatchers("/api/auth").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .antMatchers(USER_MATCHER).hasAnyAuthority("ROLE_USER")
                 .antMatchers(ADMIN_MATCHER).hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(ALL_MATCHER).hasAnyAuthority("ROLE_ADMIN","ROLE_USER")
+                .antMatchers(ALL_MATCHER).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and()
-                .addFilter(authenticationFilter)
-                .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .formLogin()
-                .loginProcessingUrl("/login") //url autenticazione utente
-                .failureUrl("/login/form?error")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/login/form?forbidden");
+                //.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()))
+                .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.cors().and().csrf().disable()
+        ;
     }
 
     @Bean
@@ -110,22 +101,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public JWTAuthenticationFilter authenticationFilter() throws Exception {
-        JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager());
-        filter.setAuthenticationManager(authenticationManagerBean());
-        filter.setAuthenticationFailureHandler(failureHandler());
-        return filter;
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new SuccessHandler();
-    }
 
 
-    @Bean
-    public SimpleUrlAuthenticationFailureHandler failureHandler() {
-        return new SimpleUrlAuthenticationFailureHandler("/login/form?error");
-    }
+
+
 }
