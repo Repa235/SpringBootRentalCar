@@ -18,7 +18,6 @@ import java.util.Map;
 public class AuthService {
 
     private final UserService userService;
-    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -33,6 +32,7 @@ public class AuthService {
                     .sign(Algorithm.HMAC256(AuthenticationConfigConstants.SECRET.getBytes()));
             Map<String, Object> claimMap = new HashMap<>(0);
             claimMap.put("token",token);
+            claimMap.put("role",role);
             return claimMap;
         }
         throw new AuthException();
