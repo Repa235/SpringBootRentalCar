@@ -38,10 +38,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] ALL_MATCHER = {
-            "/api/vehicle",
             "/api/vehicle/get/**",
-            "/api/rent/**",
-            "/api/auth/**"
+            "/api/rent/**"
+    };
+
+    private static final String[] PERMITALL_MATCHER = {
+            "/api/vehicle", "/api/auth", "/resources/**"
     };
 
 
@@ -75,8 +77,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
-                .antMatchers("/api/auth").permitAll()
-                .antMatchers("/resources/**").permitAll()
+                .antMatchers(PERMITALL_MATCHER).permitAll()
+                .and().authorizeRequests()
                 .antMatchers(USER_MATCHER).hasAnyAuthority("ROLE_USER")
                 .antMatchers(ADMIN_MATCHER).hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers(ALL_MATCHER).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
@@ -84,7 +86,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and()
-                //.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()))
                 .addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.cors().and().csrf().disable()
         ;
@@ -95,11 +96,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new AuthEntryPoint();
     }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
 
 
