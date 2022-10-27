@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
 
-  public List<User> getUserByIsAdminFalse();
-  public User getUserByUsername(String username);
+  List<User> getUserByIsAdminFalse();
+  User getUserByUsername(String username);
 
 
 }

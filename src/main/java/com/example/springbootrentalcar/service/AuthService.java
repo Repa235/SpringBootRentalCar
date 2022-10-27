@@ -33,6 +33,7 @@ public class AuthService {
             Map<String, Object> claimMap = new HashMap<>(0);
             claimMap.put("token",token);
             claimMap.put("role",role);
+            claimMap.put("userid", uDto.getId());
             return claimMap;
         }
         throw new AuthException();

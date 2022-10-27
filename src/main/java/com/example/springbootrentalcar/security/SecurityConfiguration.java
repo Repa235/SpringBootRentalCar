@@ -30,6 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String[] USER_MATCHER = {
             "/api/vehicle/free",
             "/api/user/search/**",
+            "/api/user/get/**",
     };
     private static final String[] ADMIN_MATCHER = {
             "/api/vehicle/addOrUpdate",
@@ -39,7 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final String[] ALL_MATCHER = {
             "/api/vehicle/get/**",
-            "/api/rent/**"
+            "/api/rent/**",
+            "/api/rent/rentsOf/**",
     };
 
     private static final String[] PERMITALL_MATCHER = {

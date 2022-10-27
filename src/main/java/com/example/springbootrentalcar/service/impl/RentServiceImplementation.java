@@ -1,7 +1,6 @@
 package com.example.springbootrentalcar.service.impl;
 
 import com.example.springbootrentalcar.dto.RentDto;
-import com.example.springbootrentalcar.entity.Rent;
 import com.example.springbootrentalcar.mapper.RentMapper;
 import com.example.springbootrentalcar.repository.RentRepository;
 import com.example.springbootrentalcar.service.RentService;
@@ -43,6 +42,11 @@ public class RentServiceImplementation implements RentService {
     @Override
     public void deleteRent(int id) {
         rentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RentDto> getRentsByUserId(int id) {
+        return rentMapper.convertToDtoList(rentRepository.getRentsByUserId(id));
     }
 
 }

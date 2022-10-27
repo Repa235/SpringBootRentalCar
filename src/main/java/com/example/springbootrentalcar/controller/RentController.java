@@ -36,6 +36,16 @@ public class RentController {
         }
     }
 
+    @GetMapping("/rentsOf/{id}")
+    public ResponseEntity<RentDto> getRentsOf(@PathVariable("id") int id) {
+        List<RentDto> rentDto = rentService.getRentsByUserId(id);
+        if(rentDto == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity(rentDto, HttpStatus.OK);
+        }
+    }
+
 
     @RequestMapping(value = "/addOrUpdate", method = { RequestMethod.POST, RequestMethod.PUT })
     public void addOrUpdateUser(@Valid @RequestBody RentDto rentDto) {
