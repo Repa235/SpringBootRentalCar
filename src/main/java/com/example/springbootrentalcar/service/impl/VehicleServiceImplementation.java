@@ -23,7 +23,6 @@ public class VehicleServiceImplementation implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
     private final RentService rentService;
-
     private final VehicleMapper vehicleMapper;
 
 
@@ -39,12 +38,24 @@ public class VehicleServiceImplementation implements VehicleService {
 
     @Override
     public void saveOrUpdateVehicle(VehicleDto vehicleDto) {
-        vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleDto));
+        if (vehicleDto.getId() == 0) {
+            vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleDto));
+        } else {
+            VehicleDto vehicleToModify = this.getVehicleById(vehicleDto.getId());
+            vehicleToModify.setCarBrand(vehicleDto.getCarBrand());
+            vehicleToModify.setModel(vehicleDto.getModel());
+            vehicleToModify.setRegistrationYear(vehicleDto.getRegistrationYear());
+            vehicleToModify.setType(vehicleDto.getType());
+            vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleToModify));
+        }
     }
 
     @Override
     public void deleteVehicle(int id) {
-        vehicleRepository.deleteById(id);
+        VehicleDto vehicleToDelete = this.getVehicleById(id);
+        if(vehicleToDelete!=null) {
+            vehicleRepository.deleteById(vehicleToDelete.getId());
+        }
     }
 
     @Override
@@ -53,9 +64,9 @@ public class VehicleServiceImplementation implements VehicleService {
         List<VehicleDto> allVehicles = getAllVehicles();
         for (VehicleDto v : allVehicles) {
             for (RentDto r : rentsInRange) {
-               if (v.getId()==r.getVehicleDto().getId()){
-                   allVehicles.remove(v);
-               }
+                if (v.getId() == r.getVehicleDto().getId()) {
+                    allVehicles.remove(v);
+                }
             }
         }
         return allVehicles;

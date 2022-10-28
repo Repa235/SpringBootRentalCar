@@ -1,6 +1,7 @@
 package com.example.springbootrentalcar.service.impl;
 
 import com.example.springbootrentalcar.dto.RentDto;
+import com.example.springbootrentalcar.dto.VehicleDto;
 import com.example.springbootrentalcar.mapper.RentMapper;
 import com.example.springbootrentalcar.repository.RentRepository;
 import com.example.springbootrentalcar.service.RentService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RentServiceImplementation implements RentService {
@@ -36,12 +38,26 @@ public class RentServiceImplementation implements RentService {
 
     @Override
     public void saveOrUpdateRent(RentDto rentDto) {
-        rentRepository.save(rentMapper.convertToRent(rentDto));
+        if (rentDto.getId() == 0) {
+            rentRepository.save(rentMapper.convertToRent(rentDto));
+        } else {
+            RentDto rentToModify = this.getRentById(rentDto.getId());
+            if (rentToModify != null) {
+                rentToModify.setStartDate(rentDto.getStartDate());
+                rentToModify.setEndDate(rentDto.getEndDate());
+                rentToModify.setApproved(false);
+                rentToModify.setVehicleDto(rentDto.getVehicleDto());
+                rentRepository.save(rentMapper.convertToRent(rentToModify));
+            }
+        }
     }
 
     @Override
     public void deleteRent(int id) {
-        rentRepository.deleteById(id);
+        RentDto vehicleToDelete = this.getRentById(id);
+        if (vehicleToDelete != null) {
+            rentRepository.deleteById(vehicleToDelete.getId());
+        }
     }
 
     @Override

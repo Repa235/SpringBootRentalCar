@@ -1,5 +1,6 @@
 package com.example.springbootrentalcar.service.impl;
 
+import com.example.springbootrentalcar.dto.RentDto;
 import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.entity.User;
 import com.example.springbootrentalcar.mapper.UserMapper;
@@ -7,6 +8,7 @@ import com.example.springbootrentalcar.repository.UserRepository;
 import com.example.springbootrentalcar.service.UserService;
 import com.example.springbootrentalcar.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,12 +30,28 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public void saveOrUpdateUser(UserDto userDto) {
-        userRepository.save(userMapper.convertToUser(userDto));
+        if (userDto.getId() == 0) {
+            userRepository.save(userMapper.convertToUser(userDto));
+        } else {
+            UserDto userToModify = this.getUserById(userDto.getId());
+            if (userToModify != null) {
+                userToModify.setName(userDto.getName());
+                userToModify.setSurname(userDto.getSurname());
+                userToModify.setBirthday(userDto.getBirthday());
+                userToModify.setAdmin(userDto.isAdmin());
+                userToModify.setUsername(userDto.getUsername());
+                userToModify.setPassword(userDto.getPassword());
+                userRepository.save(userMapper.convertToUser(userToModify));
+            }
+        }
     }
 
     @Override
     public void deleteUser(int id) {
-        userRepository.deleteById(id);
+        UserDto userToDelete = this.getUserById(id);
+        if (userToDelete != null) {
+            userRepository.deleteById(userToDelete.getId());
+        }
     }
 
     @Override
