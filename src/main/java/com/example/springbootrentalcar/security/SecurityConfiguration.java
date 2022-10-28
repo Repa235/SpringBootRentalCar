@@ -24,23 +24,42 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static String REALM = "SpringBootRentalCar";
     private static final String[] USER_MATCHER = {
             "/api/vehicle/free",
-            "/api/user/search/**",
-            "/api/user/get/**",
+
     };
     private static final String[] ADMIN_MATCHER = {
+            //Rent
+            "/api/rent",
+            //User
+            "/api/user",
+            "/api/user/search/**/**",
+            "/api/user/remove/**",
+            //Vehicle
+            "/api/vehicle/get/**",
             "/api/vehicle/addOrUpdate",
-            "/api/vehicle/remove/**",
-            "/api/user/**",
+            "/api/vehicle/remove/{id}",
+
+
+
+
     };
 
-    private static final String[] ALL_MATCHER = {
-            "/api/vehicle/get/**",
-            "/api/rent/**",
+    private static final String[] USER_AND_ADMIN_MATCHER = {
+            //Rent
+            "/api/rent/get/**",
             "/api/rent/rentsOf/**",
+            "/api/rent/addOrUpdate",
+            "/api/rent/remove/**",
+            //User
+            "/api/user",
+            "/api/user/get/**",
+            "/api/user/addOrUpdate",
+            //Vehicle
+            "/api/vehicle/get/**"
+
     };
 
     private static final String[] PERMITALL_MATCHER = {
-            "/api/vehicle", "/api/auth", "/resources/**"
+            "/api/vehicle/**", "/api/auth", "/resources/**"
     };
 
 
@@ -75,10 +94,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers(PERMITALL_MATCHER).permitAll()
+                //If an unauthorized user need to access a path see row 26 of JWTAuthorizationFilter.java
                 .and().authorizeRequests()
+                .antMatchers(USER_AND_ADMIN_MATCHER).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                 .antMatchers(USER_MATCHER).hasAnyAuthority("ROLE_USER")
                 .antMatchers(ADMIN_MATCHER).hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers(ALL_MATCHER).hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
@@ -92,10 +112,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthEntryPoint getBasicAuthEntryPoint() {
         return new AuthEntryPoint();
     }
-
-
-
-
 
 
 }

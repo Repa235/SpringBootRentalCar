@@ -4,6 +4,7 @@ import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,12 +15,14 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     public User convertToUser(UserDto userDto) {
         User user = null;
         if (userDto != null) {
             user =  modelMapper.map(userDto, User.class);
+            user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         }
         return user;
     }

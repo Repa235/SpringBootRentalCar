@@ -17,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping
-    public  Map<String, Object> auth(@RequestBody AuthDto authDto) {
+    public  Map<String, String> auth(@RequestBody AuthDto authDto) {
         return authService.authUser(authDto.getUsername(), authDto.getPassword());
     }
 

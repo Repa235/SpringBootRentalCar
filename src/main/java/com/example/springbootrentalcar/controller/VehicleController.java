@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/vehicle")
-@CrossOrigin(origins = "http://localhost:4200")
 @Log
 public class VehicleController {
 

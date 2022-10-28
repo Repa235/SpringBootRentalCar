@@ -57,7 +57,6 @@ public class VehicleServiceImplementation implements VehicleService {
                    allVehicles.remove(v);
                }
             }
-            break;
         }
         return allVehicles;
     }

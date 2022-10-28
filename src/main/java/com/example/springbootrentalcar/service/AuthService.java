@@ -21,7 +21,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public Map<String, Object> authUser(String username, String password) {
+    public Map<String, String> authUser(String username, String password) {
         UserDto uDto = userService.getUserByUsername(username);
         if (uDto!=null && passwordEncoder.matches(password, uDto.getPassword())) {
             String role = (uDto.isAdmin()) ? "ROLE_ADMIN" : "ROLE_USER";
@@ -30,10 +30,10 @@ public class AuthService {
                     .withClaim("role", role)
                     .withExpiresAt(new Date(System.currentTimeMillis() + AuthenticationConfigConstants.EXPIRATION_TIME))
                     .sign(Algorithm.HMAC256(AuthenticationConfigConstants.SECRET.getBytes()));
-            Map<String, Object> claimMap = new HashMap<>(0);
+            Map<String, String> claimMap = new HashMap<>(0);
             claimMap.put("token",token);
             claimMap.put("role",role);
-            claimMap.put("userid", uDto.getId());
+            claimMap.put("userid", String.valueOf(uDto.getId()));
             return claimMap;
         }
         throw new AuthException();

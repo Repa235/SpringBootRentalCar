@@ -6,30 +6,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/rent")
-@CrossOrigin(origins = "http://localhost:4200")
 public class RentController {
     private final RentService rentService;
 
     @GetMapping
-    public ResponseEntity<RentDto> getAllRents() {
+    public ResponseEntity<RentDto> totalRents() {
         List<RentDto> allRents = rentService.getAllRents();
-        if(allRents == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity(allRents, HttpStatus.OK);
-        }
+        return new ResponseEntity(allRents, HttpStatus.OK);
     }
+
 
     @GetMapping("/get/{id}")
     public ResponseEntity<RentDto> getRent(@PathVariable("id") int id) {
         RentDto rentDto = rentService.getRentById(id);
-        if(rentDto == null) {
+        if (rentDto == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity(rentDto, HttpStatus.OK);
@@ -39,7 +36,7 @@ public class RentController {
     @GetMapping("/rentsOf/{id}")
     public ResponseEntity<RentDto> getRentsOf(@PathVariable("id") int id) {
         List<RentDto> rentDto = rentService.getRentsByUserId(id);
-        if(rentDto == null) {
+        if (rentDto == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity(rentDto, HttpStatus.OK);
@@ -47,7 +44,7 @@ public class RentController {
     }
 
 
-    @RequestMapping(value = "/addOrUpdate", method = { RequestMethod.POST, RequestMethod.PUT })
+    @RequestMapping(value = "/addOrUpdate", method = {RequestMethod.POST, RequestMethod.PUT})
     public void addOrUpdateUser(@Valid @RequestBody RentDto rentDto) {
         rentService.saveOrUpdateRent(rentDto);
     }
