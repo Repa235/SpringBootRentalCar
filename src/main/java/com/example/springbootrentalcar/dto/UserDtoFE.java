@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 
 @Data
-public class UserDto {
+public class UserDtoFE {
 
     private Integer id;
     @NotBlank(message = "Name is mandatory")
@@ -15,11 +15,8 @@ public class UserDto {
     @NotBlank(message = "Surname is mandatory")
     private String surname;
     private LocalDate birthday;
-    private boolean isAdmin;
     @NotBlank(message = "Username is mandatory")
     private String username;
-    @NotBlank(message = "Password is mandatory")
-    private String password;
 
 }
 

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 public class RentDto {
 
-    private int id;
+    private Integer id;
     private LocalDate startDate;
     private LocalDate endDate;
     private boolean isApproved;

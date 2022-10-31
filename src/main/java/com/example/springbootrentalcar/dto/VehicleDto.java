@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class VehicleDto {
 
-    private int id;
+    private Integer id;
     @NotBlank(message = "Car brand is mandatory")
     private String carBrand;
     @NotBlank(message = "Model is mandatory")
