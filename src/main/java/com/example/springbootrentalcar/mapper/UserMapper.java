@@ -23,7 +23,9 @@ public class UserMapper {
         User user = null;
         if (userDto != null) {
             user =  modelMapper.map(userDto, User.class);
-            user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+            if(userDto.getPassword()!=null) {
+                user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+            }
         }
         return user;
     }

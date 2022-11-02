@@ -30,7 +30,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public void saveOrUpdateUser(UserDto userDto) {
-        if (userDto.getId() == 0) {
+        if (userDto.getId() == null) {
             userRepository.save(userMapper.convertToUser(userDto));
         } else {
             UserDto userToModify = this.getUserById(userDto.getId());

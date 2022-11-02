@@ -38,7 +38,7 @@ public class VehicleServiceImplementation implements VehicleService {
 
     @Override
     public void saveOrUpdateVehicle(VehicleDto vehicleDto) {
-        if (vehicleDto.getId() == 0) {
+        if (vehicleDto.getId() == null) {
             vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleDto));
         } else {
             VehicleDto vehicleToModify = this.getVehicleById(vehicleDto.getId());

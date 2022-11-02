@@ -38,7 +38,7 @@ public class RentServiceImplementation implements RentService {
 
     @Override
     public void saveOrUpdateRent(RentDto rentDto) {
-        if (rentDto.getId() == 0) {
+        if (rentDto.getId() == null) {
             rentRepository.save(rentMapper.convertToRent(rentDto));
         } else {
             RentDto rentToModify = this.getRentById(rentDto.getId());
