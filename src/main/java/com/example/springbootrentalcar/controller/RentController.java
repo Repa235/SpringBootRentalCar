@@ -45,13 +45,20 @@ public class RentController {
 
 
     @RequestMapping(value = "/addOrUpdate", method = {RequestMethod.POST, RequestMethod.PUT})
-    public void addOrUpdateUser(@Valid @RequestBody RentDto rentDto) {
+    public void addOrUpdateRent(@Valid @RequestBody RentDto rentDto) {
         rentService.saveOrUpdateRent(rentDto);
     }
 
     @DeleteMapping("/remove/{id}")
-    public void removeUser(@PathVariable("id") int id) {
+    public void removeRent(@PathVariable("id") int id) {
         rentService.deleteRent(id);
+    }
+
+    @GetMapping(value = "/approve/{id}")
+    public void approveRent(@PathVariable("id") int id) {
+        RentDto rentToApprove = rentService.getRentById(id);
+        rentToApprove.setApproved(true);
+        rentService.saveOrUpdateRent(rentToApprove);
     }
 
 

@@ -31,6 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String[] ADMIN_MATCHER = {
             //Rent
             "/api/rent",
+            "/api/rent/approve/**",
             //User
             "/api/user",
             "/api/user/search/**/**",
@@ -39,8 +40,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/api/vehicle/get/**",
             "/api/vehicle/addOrUpdate",
             "/api/vehicle/remove/{id}",
-
-
 
 
     };
@@ -61,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] PERMITALL_MATCHER = {
-            "/api/vehicle/**", "/api/auth", "/resources/**"
+            "/api/vehicle", "/api/auth", "/resources/**"
     };
 
 

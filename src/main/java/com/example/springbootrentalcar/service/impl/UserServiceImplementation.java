@@ -1,6 +1,5 @@
 package com.example.springbootrentalcar.service.impl;
 
-import com.example.springbootrentalcar.dto.RentDto;
 import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.entity.User;
 import com.example.springbootrentalcar.mapper.UserMapper;
@@ -8,7 +7,6 @@ import com.example.springbootrentalcar.repository.UserRepository;
 import com.example.springbootrentalcar.service.UserService;
 import com.example.springbootrentalcar.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

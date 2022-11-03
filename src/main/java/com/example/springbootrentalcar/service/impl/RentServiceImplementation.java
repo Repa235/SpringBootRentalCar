@@ -1,7 +1,6 @@
 package com.example.springbootrentalcar.service.impl;
 
 import com.example.springbootrentalcar.dto.RentDto;
-import com.example.springbootrentalcar.dto.VehicleDto;
 import com.example.springbootrentalcar.mapper.RentMapper;
 import com.example.springbootrentalcar.repository.RentRepository;
 import com.example.springbootrentalcar.service.RentService;
@@ -45,7 +44,7 @@ public class RentServiceImplementation implements RentService {
             if (rentToModify != null) {
                 rentToModify.setStartDate(rentDto.getStartDate());
                 rentToModify.setEndDate(rentDto.getEndDate());
-                rentToModify.setApproved(false);
+                rentToModify.setApproved(rentDto.isApproved());
                 rentToModify.setVehicleDto(rentDto.getVehicleDto());
                 rentRepository.save(rentMapper.convertToRent(rentToModify));
             }
