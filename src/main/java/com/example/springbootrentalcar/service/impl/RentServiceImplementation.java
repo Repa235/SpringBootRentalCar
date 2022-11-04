@@ -1,6 +1,7 @@
 package com.example.springbootrentalcar.service.impl;
 
 import com.example.springbootrentalcar.dto.RentDto;
+import com.example.springbootrentalcar.exception.RentNotFoundException;
 import com.example.springbootrentalcar.mapper.RentMapper;
 import com.example.springbootrentalcar.repository.RentRepository;
 import com.example.springbootrentalcar.service.RentService;
@@ -42,11 +43,10 @@ public class RentServiceImplementation implements RentService {
         } else {
             RentDto rentToModify = this.getRentById(rentDto.getId());
             if (rentToModify != null) {
-                rentToModify.setStartDate(rentDto.getStartDate());
-                rentToModify.setEndDate(rentDto.getEndDate());
-                rentToModify.setApproved(rentDto.isApproved());
-                rentToModify.setVehicleDto(rentDto.getVehicleDto());
+                rentToModify=rentMapper.DtoToDto4Modify(rentDto);
                 rentRepository.save(rentMapper.convertToRent(rentToModify));
+            } else {
+                throw new RentNotFoundException();
             }
         }
     }
@@ -56,6 +56,8 @@ public class RentServiceImplementation implements RentService {
         RentDto vehicleToDelete = this.getRentById(id);
         if (vehicleToDelete != null) {
             rentRepository.deleteById(vehicleToDelete.getId());
+        } else {
+            throw new RentNotFoundException();
         }
     }
 

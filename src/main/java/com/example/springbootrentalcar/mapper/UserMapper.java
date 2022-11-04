@@ -1,7 +1,6 @@
 package com.example.springbootrentalcar.mapper;
 
 import com.example.springbootrentalcar.dto.UserDto;
-import com.example.springbootrentalcar.dto.UserDtoFE;
 import com.example.springbootrentalcar.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -39,13 +38,22 @@ public class UserMapper {
         return userDto;
     }
 
+    public UserDto DtoToDto4Modify(UserDto userDtoToModify) {
+        UserDto userDto = null;
+        if (userDtoToModify != null) {
+            userDto =  modelMapper.map(userDtoToModify, UserDto.class);
+        }
+        return userDto;
+    }
+
+
 
     public List<UserDto> convertToDtoList(List<User> usersList) {
         List<UserDto> usersDto = new ArrayList<>();
         if (usersList != null) {
             usersDto = usersList
                     .stream()
-                    .map(source -> modelMapper.map(source, UserDto.class))
+                    .map(this::convertToDto)
                     .collect(Collectors.toList());
         }
         return usersDto;

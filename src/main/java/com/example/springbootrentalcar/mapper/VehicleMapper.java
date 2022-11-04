@@ -34,12 +34,20 @@ public class VehicleMapper {
         return vehicleDto;
     }
 
+    public VehicleDto DtoToDto4Modify(VehicleDto vehicleToModify) {
+        VehicleDto vehicleDto = null;
+        if (vehicleToModify != null) {
+            vehicleDto =  modelMapper.map(vehicleToModify, VehicleDto.class);
+        }
+        return vehicleDto;
+    }
+
     public List<VehicleDto> convertToDtoList(List<Vehicle> vehicleList) {
         List<VehicleDto> vehicleDtoList = new ArrayList<>();
-        if (vehicleDtoList != null) {
+        if (vehicleList != null) {
             vehicleDtoList = vehicleList
                     .stream()
-                    .map(source -> modelMapper.map(source, VehicleDto.class))
+                    .map(this::convertToDto)
                     .collect(Collectors.toList());
         }
         return vehicleDtoList;

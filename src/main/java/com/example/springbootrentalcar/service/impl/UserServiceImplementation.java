@@ -2,6 +2,7 @@ package com.example.springbootrentalcar.service.impl;
 
 import com.example.springbootrentalcar.dto.UserDto;
 import com.example.springbootrentalcar.entity.User;
+import com.example.springbootrentalcar.exception.UserNotFoundException;
 import com.example.springbootrentalcar.mapper.UserMapper;
 import com.example.springbootrentalcar.repository.UserRepository;
 import com.example.springbootrentalcar.service.UserService;
@@ -33,13 +34,10 @@ public class UserServiceImplementation implements UserService {
         } else {
             UserDto userToModify = this.getUserById(userDto.getId());
             if (userToModify != null) {
-                userToModify.setName(userDto.getName());
-                userToModify.setSurname(userDto.getSurname());
-                userToModify.setBirthday(userDto.getBirthday());
-                userToModify.setAdmin(userDto.isAdmin());
-                userToModify.setUsername(userDto.getUsername());
-                userToModify.setPassword(userDto.getPassword());
+                userToModify = userMapper.DtoToDto4Modify(userDto);
                 userRepository.save(userMapper.convertToUser(userToModify));
+            } else {
+                throw new UserNotFoundException();
             }
         }
     }
@@ -49,6 +47,8 @@ public class UserServiceImplementation implements UserService {
         UserDto userToDelete = this.getUserById(id);
         if (userToDelete != null) {
             userRepository.deleteById(userToDelete.getId());
+        } else {
+            throw new UserNotFoundException();
         }
     }
 

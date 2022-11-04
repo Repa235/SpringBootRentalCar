@@ -39,12 +39,23 @@ private final VehicleMapper vehicleMapper;
         return rentDto;
     }
 
+    public RentDto DtoToDto4Modify(RentDto rentDtoToModify) {
+        RentDto rentDto = null;
+        if (rentDtoToModify != null) {
+            rentDto =  modelMapper.map(rentDtoToModify, RentDto.class);
+            rentDto.setUserDto(rentDtoToModify.getUserDto());
+            rentDto.setVehicleDto(rentDtoToModify.getVehicleDto());
+        }
+        return rentDto;
+    }
+
+
     public List<RentDto> convertToDtoList(List<Rent> rentList) {
         List<RentDto> rentDtoList = new ArrayList<>();
-        if (rentDtoList != null) {
+        if (rentList != null) {
             rentDtoList = rentList
                     .stream()
-                    .map(source -> this.convertToDto(source))
+                    .map(this::convertToDto)
                     .collect(Collectors.toList());
         }
         return rentDtoList;

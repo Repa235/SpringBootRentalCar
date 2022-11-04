@@ -4,6 +4,7 @@ package com.example.springbootrentalcar.service.impl;
 import com.example.springbootrentalcar.dto.RentDto;
 import com.example.springbootrentalcar.dto.VehicleDto;
 
+import com.example.springbootrentalcar.exception.VehicleNotFoundException;
 import com.example.springbootrentalcar.mapper.VehicleMapper;
 import com.example.springbootrentalcar.repository.VehicleRepository;
 import com.example.springbootrentalcar.service.RentService;
@@ -42,19 +43,23 @@ public class VehicleServiceImplementation implements VehicleService {
             vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleDto));
         } else {
             VehicleDto vehicleToModify = this.getVehicleById(vehicleDto.getId());
-            vehicleToModify.setCarBrand(vehicleDto.getCarBrand());
-            vehicleToModify.setModel(vehicleDto.getModel());
-            vehicleToModify.setRegistrationYear(vehicleDto.getRegistrationYear());
-            vehicleToModify.setType(vehicleDto.getType());
-            vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleToModify));
+            if (vehicleToModify != null) {
+                vehicleToModify=vehicleMapper.DtoToDto4Modify(vehicleDto);
+                vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleToModify));
+            } else {
+                throw new VehicleNotFoundException();
+            }
+
         }
     }
 
     @Override
     public void deleteVehicle(int id) {
         VehicleDto vehicleToDelete = this.getVehicleById(id);
-        if(vehicleToDelete!=null) {
+        if (vehicleToDelete != null) {
             vehicleRepository.deleteById(vehicleToDelete.getId());
+        } else {
+            throw new VehicleNotFoundException();
         }
     }
 
