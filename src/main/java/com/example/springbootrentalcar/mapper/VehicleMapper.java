@@ -34,7 +34,7 @@ public class VehicleMapper {
         return vehicleDto;
     }
 
-    public VehicleDto DtoToDto4Modify(VehicleDto vehicleToModify) {
+    public VehicleDto dtoToDto4Modify(VehicleDto vehicleToModify) {
         VehicleDto vehicleDto = null;
         if (vehicleToModify != null) {
             vehicleDto =  modelMapper.map(vehicleToModify, VehicleDto.class);

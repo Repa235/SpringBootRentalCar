@@ -34,7 +34,7 @@ public class UserServiceImplementation implements UserService {
         } else {
             UserDto userToModify = this.getUserById(userDto.getId());
             if (userToModify != null) {
-                userToModify = userMapper.DtoToDto4Modify(userDto);
+                userToModify = userMapper.dtoToDto4Modify(userDto);
                 userRepository.save(userMapper.convertToUser(userToModify));
             } else {
                 throw new UserNotFoundException();

@@ -43,7 +43,7 @@ public class RentServiceImplementation implements RentService {
         } else {
             RentDto rentToModify = this.getRentById(rentDto.getId());
             if (rentToModify != null) {
-                rentToModify=rentMapper.DtoToDto4Modify(rentDto);
+                rentToModify=rentMapper.dtoToDto4Modify(rentDto);
                 rentRepository.save(rentMapper.convertToRent(rentToModify));
             } else {
                 throw new RentNotFoundException();

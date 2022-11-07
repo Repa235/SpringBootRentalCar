@@ -44,7 +44,7 @@ public class VehicleServiceImplementation implements VehicleService {
         } else {
             VehicleDto vehicleToModify = this.getVehicleById(vehicleDto.getId());
             if (vehicleToModify != null) {
-                vehicleToModify=vehicleMapper.DtoToDto4Modify(vehicleDto);
+                vehicleToModify=vehicleMapper.dtoToDto4Modify(vehicleDto);
                 vehicleRepository.save(vehicleMapper.convertToVehicle(vehicleToModify));
             } else {
                 throw new VehicleNotFoundException();

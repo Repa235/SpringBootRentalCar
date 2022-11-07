@@ -39,7 +39,7 @@ private final VehicleMapper vehicleMapper;
         return rentDto;
     }
 
-    public RentDto DtoToDto4Modify(RentDto rentDtoToModify) {
+    public RentDto dtoToDto4Modify(RentDto rentDtoToModify) {
         RentDto rentDto = null;
         if (rentDtoToModify != null) {
             rentDto =  modelMapper.map(rentDtoToModify, RentDto.class);

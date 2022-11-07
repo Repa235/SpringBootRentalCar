@@ -38,7 +38,7 @@ public class UserMapper {
         return userDto;
     }
 
-    public UserDto DtoToDto4Modify(UserDto userDtoToModify) {
+    public UserDto dtoToDto4Modify(UserDto userDtoToModify) {
         UserDto userDto = null;
         if (userDtoToModify != null) {
             userDto =  modelMapper.map(userDtoToModify, UserDto.class);
