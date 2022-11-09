@@ -47,8 +47,9 @@ public class VehicleController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public void removeUser(@PathVariable("id") int id) {
+    public ResponseEntity<VehicleDto> removeVehicle(@PathVariable("id") int id) {
         vehicleService.deleteVehicle(id);
+        return getVehicle();
     }
 
     @RequestMapping(value = "/free", method = { RequestMethod.POST, RequestMethod.PUT })
